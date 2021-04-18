@@ -6,9 +6,15 @@ import { MdAccountCircle } from 'react-icons/md'
 import { FiMenu } from 'react-icons/fi';
 import { MdSettings } from 'react-icons/md';
 import { RiInformationFill } from 'react-icons/ri';
-import Foot0 from '../images/mountain_foot_0.svg';
 import mascotNoBG from '../images/mascotNoBG.svg';
 import Progress from '../components/Progress';
+import Foot0 from '../images/mountain_foot_0.svg';
+import Foot2 from '../images/mountain_foot_2.svg';
+import Foot4 from '../images/mountain_foot_4.svg';
+import Foot6 from '../images/mountain_foot_6.svg';
+import Foot8 from '../images/mountain_foot_8.svg';
+import Foot10 from '../images/mountain_foot_10.svg';
+
 
 
 // greeting
@@ -24,8 +30,8 @@ function getStateOfDay() {
 }
 
 // // progression calculator
-// let maxStandardConsult = 5;
-// let
+let maxStandardConsult = 5;
+let numberOfUserConsults = 3;
 
 
 function Home() {
@@ -43,6 +49,31 @@ function Home() {
         console.log("clicked")
     }
 
+
+    const numberOfUserConsult = 5;
+
+    function HandleUserConsultProgress(numberOfUserConsults) {
+        const maxStandardConsult = 5;
+        if(numberOfUserConsults >= maxStandardConsult) {
+            return (Foot10);
+        }
+        else if (numberOfUserConsults === 4) {
+            return (Foot8);
+        }
+        else if (numberOfUserConsults === 3) {
+            return (Foot6);
+        }
+        else if (numberOfUserConsults === 2) {
+            return (Foot4);
+        }
+        else if (numberOfUserConsults === 1) {
+            return (Foot2);
+        }
+        else if (numberOfUserConsults === 0) {
+            return (Foot0);
+        }
+
+    }
 
 
     return (
@@ -110,7 +141,7 @@ function Home() {
         </TrackerBar> */}
             
         <HeroImageContainer>
-            <HeroImage src={Foot0} type='image/svg' />
+            <HeroImage src={HandleUserConsultProgress(numberOfUserConsults)} type='image/svg' />
         </HeroImageContainer> 
 
             <BottomBar>
