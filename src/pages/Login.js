@@ -2,14 +2,18 @@ import React, { useState, useEffect } from "react";
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { MdKeyboardArrowRight, MdArrowForward } from 'react-icons/md';
-// import "./styles.css";
+import MascotSeeThru from '../images/mascotNoBG.svg'; 
+import axios from 'axios';
+
+let url = 'http://localhost:5000';
+
 
 function Login() {
 
 const [loading, setLoading] = useState(true)
 
 useEffect(() => {
-    setTimeout(() => setLoading(false),  500)
+    setTimeout(() => setLoading(false),  3000)
     }, [])
 
 
@@ -41,6 +45,10 @@ useEffect(() => {
 
   return (
     <Container>
+
+    <PaneLeft></PaneLeft>
+
+    <PaneRight></PaneRight>
     
     {loading === false ?
     <>
@@ -48,17 +56,18 @@ useEffect(() => {
       MiMedi
     </CompanyLogo>
 
-    <FormContainer>
 
-      {/* <FormWrap> */}
+     <FormContainer>
+
+      <FormWrap>
 
             <FormContent>
 
-                <Form onSubmit={handleSubmit}>
+                 <Form onSubmit={handleSubmit}>
       
                     <FormH1>Sign In</FormH1>
 
-                          <FormInput
+                        <FormInput1
                             value={loginData.email}
                             onChange={handleFormChange}
                             placeholder="Email"
@@ -68,7 +77,7 @@ useEffect(() => {
                             autoComplete="off"
                         />
 
-                        <FormInput
+                        <FormInput2
                             value={loginData.password}
                             onChange={handleFormChange}
                             placeholder="Password"
@@ -76,22 +85,42 @@ useEffect(() => {
                             name="password"
                             required
                             autoComplete="off"
-                        />
+                        /> 
 
                        
                         <FormButton onMouseEnter={onHover} onMouseLeave={onHover} type='submit' to='/home'>Sign Mi In {hover ? <ArrowForward /> : <ArrowRight /> }</FormButton>
-                        <Text to='/sign-up'>New? <u>Create an Account!</u></Text> 
-                </Form>
+                        <Text to='/sign-up'>New? <u>Create an Account!</u></Text>
+                </Form> 
 
-            </FormContent> 
+            </FormContent>  
 
-        {/* </FormWrap> */}
+        </FormWrap> 
 
-    </FormContainer>
+     </FormContainer> 
 
     </>
     :
-    <h1>Load Screen</h1>
+    <>
+
+    <PaneLeft></PaneLeft>
+
+    <PaneRight></PaneRight>
+
+    <PreloaderWelcome>
+        Welcome to 
+    </PreloaderWelcome>
+    <PreloaderH1>
+      MiMedi
+    </PreloaderH1>
+
+    {/* <PreloaderImg src={MascotWhiteBG} type='image/svg' /> */}
+    <PreloaderAnimation>
+        <PreloaderImg src={MascotSeeThru} type='image/svg' />
+    </PreloaderAnimation>
+
+    </>
+
+
     }
     
     </Container>
@@ -104,73 +133,157 @@ export default Login;
 
 
 
+// ------------------------------------------ Preloader Animation --------------------------------------
+// Credit: https://codepen.io/peeke/pen/BjxXZa
+
+const PreloaderAnimation = styled.div`
+position: absolute;
+position: absolute;
+left: 50%;
+top: 65%;
+transform: translateX(-50%) translateY(-50%);
+width: 200px;
+height: 200px;
 
 
-// styles
-const Container = styled.div `
-position: relative;
-background-image: linear-gradient(to left top, #434997, #295fa6, #0573b0, #0285b4, #2b96b6, #30a1b9, #3cacbb, #4bb7bc, #42c0bd, #3ec9bb, #41d1b6, #4cd9af);
-width: 100%;
-height: 100vh;
-font-family: 'Baloo 2', cursive;
-justify-content: center;
+&:before {
+    content: '';
+    position: relative;
+    display: block;
+    width: 200%;
+    height: 200%;
+    box-sizing: border-box;
+    margin-left: -50%;
+    margin-top: -50%;
+    border-radius: 50%;
+    background-color: #9ede73;
+    animation: pulse-ring 1.25s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+  }
+  
+  &:after {
+    content: '';
+    position: absolute;
+    left: 0; 
+    top: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(0,0,0,.3);
+    animation: pulse-dot 1.25s cubic-bezier(0.455, 0.03, 0.515, 0.955) -.4s infinite;
+  }
+
+  @keyframes pulse-ring {
+  0% {
+    transform: scale(.33);
+  }
+  80%, 100% {
+    opacity: 0;
+  }
+}
+
+@keyframes pulse-dot {
+  0% {
+    transform: scale(.8);
+  }
+  50% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(.8);
+  }
+}
+`;
+
+const PreloaderImg = styled.img `
+position: absolute;
+position: absolute;
+left: 50%;
+top: 47%;
+transform: translateX(-50%) translateY(-50%);
+width: 200px;
+height: 200px;
+border-radius: 50%;
+z-index: 999;
 `;
 
 
-const CompanyLogo = styled.h1 `
-font-size: 150px;
-color: white;
-position: relative;
-top: 10%;
-margin-left: 25%;
+//  -------------------------------------------- styles -------------------------------------------------
 
+const Container = styled.div `
+    background-image: linear-gradient(to left top, #434997, #295fa6, #0573b0, #0285b4, #2b96b6, #30a1b9, #3cacbb, #4bb7bc, #42c0bd, #3ec9bb, #41d1b6, #4cd9af);
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    font-family: 'Baloo 2', cursive;
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+`;
+
+const PreloaderWelcome = styled.h2 `
+    position: relative;
+    font-size: 32px;
+    color: white;
+    margin-top: 10%;
+    margin-right: auto;
+    margin-left: auto;
+`;
+
+const PreloaderH1 = styled.h1 `
+    position: relative;
+    font-size: 104px;
+    color: white;
+    margin-top: -1%;
+    margin-right: auto;
+    margin-left: auto;
+
+    @media screen and (max-width: 480px) {
+        font-size: 72px;
+        margin: 15% auto;
+    }
+`;
+
+
+
+
+const CompanyLogo = styled.h1 `
+    position: relative;
+    font-size: 64px;
+    color: white;
+    margin: 5% auto;
+
+    @media screen and (max-width: 480px) {
+        font-size: 72px;
+        margin: 15% auto;
+    }
 `;
 
 
 const FormContainer = styled.div`
     position: relative;
-    height: 60%;
-    width: 85%;
-    display: flex;
-    margin: 35% auto;
-    
-    ${'' /* bottom: 0;
-    left: 0;
-    right: 0;
-    top: 0;
-    z-index: 0; */}
-    ${'' /* overflow: hidden; */}
-    ${'' /* padding-top: 6%; */}
-    ${'' /* background: #f07167; */}
+    height: 70%;
+    width: 40%;
+    margin: -8% auto;
     font-family: 'Baloo 2', cursive;
-    
+    border-radius: 8px;
+
+    @media screen and (max-width: 480px) {
+        height: 70%;
+        width: 75%;
+        margin: -20% auto;
+    } 
 `;
 
 
-// const FormWrap = styled.div`
-//     height: 100%;
-//     background: blue;
-//     width: 250px;
-//     display: flex; 
-//     flex-direction: column;
-//     justify-content: center;
-// `;
-
-
-
-// const Icon = styled(Link)`
-//     margin-left: 32px;
-//     margin-top: 32px;
-//     text-decoration: none;
-//     color: #fff;
-//     font-weight: 700;
-//     font-size: 32px;
-
-//     @media screen and (max-width: 400px) {
-//         margin-left: 16px;
-//         margin-top: 8px;
-//     }
-// `;
+const FormWrap = styled.div`
+    height: 100%;
+    width: 100%;
+    display: flex; 
+    flex-direction: column;
+    justify-content: center;
+`;
 
 
 
@@ -180,61 +293,64 @@ const FormContent = styled.div`
     align-items: center;
     height: 100%;
     width: 100%;
-
-    ${'' /* background: blue; */}
-
-    ${'' /* flex-direction: column; */}
-    
-    ${'' /* @media screen and (max-width: 480px) {
-        padding: 10px;
-    } */}
 `;
 
 
 const Form = styled.div`
     background: rgb(255,255,255,0.3);
+    max-width: 375px;
+    height: auto;
     width: 100%;
-    height: 100%;
-    ${'' /* height: auto; */}
     z-index: 1;
     display: grid;
-    margin: 0 auto;
-    padding: 80px 30px;
+    margin: 15% auto 0 auto;
+    padding: 20px 30px 80px 30px;
     border-radius: 4px;
     ${'' /* box-shadow: 0 1px 3px rgba(0,0,0,0.9); */}
 
-    ${'' /* @media screen and (max-width: 400px) {
+    @media screen and (max-width: 400px) {
         padding: 32px 32px;
-    } */}
+    }
+`;
+
+
+const FormGroup = styled.div `
+display: flex;
+flex-direction: row;
+justify-content: center;
 `;
 
 
 const FormH1 = styled.h1`
-    margin-top: 10%;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     color: #fff;
-    font-size: 128px;
+    font-size: 50px;
     font-weight: 400;
     text-align: center;
 `;
 
 
-const FormInput = styled.input`
-    padding: 16px 30px;
-    ${'' /* margin-bottom: 10%; */}
-    margin: 0 5% 10% 5%;
-    font-size: 64px;
+const FormInput1 = styled.input`
+    padding: 16px 16px;
+    margin: 0 5px 20px 5px;
     border: none;
-    border-radius: 16px;
-    ${'' /* border-radius: 8px; */}
+    border-radius: 8px;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
     outline: none;
+`;
 
+const FormInput2 = styled.input`
+    padding: 16px 16px;
+    margin: 0 5px 20px 5px;
+    border: none;
+    border-radius: 8px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    outline: none;
 `;
 
 
 const FormButton = styled.button`   
-    margin: -20px 5% 0 5%;
+    margin-top: 10px;
     position: relative;
     background: #3E3EDC;
     ${'' /* background: #50DF60; */}
@@ -252,7 +368,6 @@ const FormButton = styled.button`
     align-items: center;
     transition: all 0.2s ease-in-out;
     text-decoration: none;
-    font-size: 64px;
 
     &:hover {
         transition: all 0.2s ease-in-out;
@@ -260,33 +375,38 @@ const FormButton = styled.button`
         ${'' /* background: #1D39AD; */}
         background: #9ede73;
     }
-
 `;
-
-
 
 const ArrowForward = styled(MdArrowForward)`
     margin-left: 8px;
-    font-size: 64px;
+    font-size: 24px;
     
 `;
 
 const ArrowRight = styled(MdKeyboardArrowRight)`
     margin-left: 8px;
-    font-size: 64px;
+    font-size: 24px;
 `;
 
 const Text = styled(Link)`
     text-align: center;
     margin-top: 24px;
     color: #fff;
-    font-size: 40px;
+    font-size: 14px;
     text-decoration: none;
-
 `;
 
+const PaneLeft = styled.div `
+    height: 100vh;
+    width: 34%;
+    background: #323639;
+    position: absolute;
+`;
 
-
-
-
-
+const PaneRight = styled.div `
+    height: 100vh;
+    width: 34%;
+    background: #323639;
+    position: absolute;
+    right: 0;
+`;
