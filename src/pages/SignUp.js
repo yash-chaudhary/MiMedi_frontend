@@ -2,11 +2,9 @@ import React, { useState } from "react";
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { MdKeyboardArrowRight, MdArrowForward } from 'react-icons/md';
-import axios from 'axios';
 
 
 function SignUp() {
-
   const [registerData, setRegisterData] = useState({
     firstName: '',
     lastName: '',

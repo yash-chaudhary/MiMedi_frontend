@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link } from 'react-router-dom'
 import { AiFillHome } from 'react-icons/ai';
@@ -6,9 +6,10 @@ import { MdAccountCircle } from 'react-icons/md'
 import { FiMenu } from 'react-icons/fi';
 import { MdSettings } from 'react-icons/md';
 import { RiInformationFill } from 'react-icons/ri';
-import Stage1 from '../images/mountain_stage_1.svg';
+import Foot0 from '../images/mountain_foot_0.svg';
 import mascotNoBG from '../images/mascotNoBG.svg';
-import axios from 'axios';
+import Progress from '../components/Progress';
+
 
 // greeting
 function getStateOfDay() {
@@ -22,13 +23,18 @@ function getStateOfDay() {
     }
 }
 
+// // progression calculator
+// let maxStandardConsult = 5;
+// let
+
+
 function Home() {
 
-    // const [trackerPercent, setTrackerPercent] = useState(0);
+    const [completed, setCompleted] = useState(0);
 
-    // useEffect(() => {
-    //     setInterval(() => setTracker(Math.floor(Math.random() * 100) + 1), 2000);
-    //   }, []);
+    useEffect(() => {
+        setCompleted(30)
+      }, []);
 
     const [isOpen, setIsOpen] = useState(false)
 
@@ -56,8 +62,7 @@ function Home() {
         </TopBarContainer>
 
 
-        
-
+    
         <TrackerContentContainer>
             MiMedi Goals
 
@@ -96,10 +101,16 @@ function Home() {
 
         </TrackerContentContainer>
 
-        <TrackerBar />
+        <div>
+        <Progress bgcolor={"#2b317c"} completed={completed} />
+        </div>
+
+        {/* <TrackerBar>
+
+        </TrackerBar> */}
             
         <HeroImageContainer>
-            <HeroImage src={Stage1} type='image/svg' />
+            <HeroImage src={Foot0} type='image/svg' />
         </HeroImageContainer> 
 
             <BottomBar>
@@ -129,10 +140,6 @@ function Home() {
 }
 
 export default Home;
-
-
-//-------------------------------------------- styles -------------------------------------------------
-
 
 
 //------------------------------------------- tracker styles-------------------------------------------

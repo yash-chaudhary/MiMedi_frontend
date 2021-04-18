@@ -5,7 +5,7 @@ import { MdKeyboardArrowRight, MdArrowForward } from 'react-icons/md';
 import MascotSeeThru from '../images/mascotNoBG.svg'; 
 import axios from 'axios';
 
-let url = 'http://localhost:5000';
+let url = 'http://localhost:5000/api/signIn';
 
 
 function Login() {
@@ -34,13 +34,16 @@ useEffect(() => {
         ...loginData,
         [name]: value
     });
-}   
+}
+
 
   const handleSubmit = e => {
       e.preventDefault();
+      axios.post(url, loginData)
+      .then(res => console.log(res))
+      .catch(e=> console.log(e))
   };
 
-  console.log(loginData);
 
 
   return (

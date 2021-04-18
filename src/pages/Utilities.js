@@ -39,7 +39,6 @@ function Utilities() {
                     </ServiceDescription>
                 </ServiceGroup>
 
-
                 <ServiceGroup to='/utilities/mi-search'>
                     <ServiceIcon>
                         <BiSearchAlt />
@@ -55,8 +54,6 @@ function Utilities() {
                     </ServiceDescription>
                 </ServiceGroup>
 
-
-
                 <ServiceGroup to='/utilities/mi-alert'>
                     <ServiceIcon>
                         <IoAlertCircle />
@@ -70,8 +67,6 @@ function Utilities() {
                         </ServiceDesData>
                     </ServiceDescription>
                 </ServiceGroup>
-
-
 
                 <ServiceGroup to='/settings'>
                     <ServiceIcon>
@@ -105,8 +100,6 @@ function Utilities() {
                 <FiMenu/>
             </IconLink>
 
-            
-                
             </IconsContainer>
 
             </BottomBar>
